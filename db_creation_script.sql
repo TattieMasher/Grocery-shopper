@@ -15,13 +15,15 @@ CREATE TABLE `meals` (
 
 CREATE TABLE `ingredients` (
 	`ingredient_id` INT NOT NULL AUTO_INCREMENT,
-	`name` varchar(255),
+	`ingredient_name` varchar(255),
 	PRIMARY KEY (`ingredient_id`)
 );
 
 CREATE TABLE `meal_ingredients_link` (
 	`meal_id` INT NOT NULL,
 	`ingredient_id` INT NOT NULL,
+	`ingredient_quantity` DECIMAL(10,2) NOT NULL,
+	`ingredient_quantity_unit` INT NOT NULL,
 	PRIMARY KEY (`meal_id`,`ingredient_id`)
 );
 
