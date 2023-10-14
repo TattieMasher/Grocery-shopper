@@ -1,15 +1,15 @@
 CREATE TABLE `users` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` varchar(255) NOT NULL,
-	`email` varchar(255) NOT NULL UNIQUE,
+	`user_name` varchar(255) NOT NULL,
+	`user_email` varchar(255) NOT NULL UNIQUE,
 	`password_hash` varchar(255) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `meals` (
 	`meal_id` INT NOT NULL AUTO_INCREMENT,
-	`name` varchar(255),
-	`description` TEXT NOT NULL,
+	`meal_name` varchar(255),
+	`meal_description` TEXT NOT NULL,
 	PRIMARY KEY (`meal_id`)
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE `meal_ingredients_link` (
 
 CREATE TABLE `shopping_lists` (
 	`shopping_list_id` INT NOT NULL AUTO_INCREMENT,
-	`name` varchar(255) NOT NULL,
+	`list_name` varchar(255) NOT NULL,
 	`user_id` INT NOT NULL,
 	PRIMARY KEY (`shopping_list_id`)
 );
