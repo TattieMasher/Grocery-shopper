@@ -16,12 +16,6 @@ public class Ingredient {
     @Column(name = "ingredient_name")
     private String name;
 
-    @Column(name = "ingredient_quantity")
-    private BigDecimal ingredientQuantity;
-
-    @Column(name = "ingredient_quantity_unit")
-    private String ingredientQuantityUnit;
-
     public Long getIngredientId() {
         return ingredientId;
     }
@@ -36,21 +30,5 @@ public class Ingredient {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BigDecimal getIngredientQuantity() {
-        return ingredientQuantity;
-    }
-
-    public void setIngredientQuantity(BigDecimal ingredientQuantity) {
-        this.ingredientQuantity = ingredientQuantity;
-    }
-
-    public String getIngredientQuantityUnit() {
-        return ingredientQuantityUnit;
-    }
-
-    public void setIngredientQuantityUnit(String ingredientQuantityUnit) {
-        this.ingredientQuantityUnit = ingredientQuantityUnit;
     }
 }

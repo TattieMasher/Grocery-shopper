@@ -2,6 +2,8 @@ package com.groceryplanning.groceryplanner.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "meals")
 public class Meal {
@@ -16,6 +18,14 @@ public class Meal {
 
     @Column(name = "meal_description", columnDefinition = "TEXT", nullable = false)
     private String description;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "meal_ingredients_link",
+            joinColumns = @JoinColumn(name = "meal_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    private Set<Ingredient> ingredients;
 
     public Long getId() {
         return id;
@@ -39,5 +49,13 @@ public class Meal {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
