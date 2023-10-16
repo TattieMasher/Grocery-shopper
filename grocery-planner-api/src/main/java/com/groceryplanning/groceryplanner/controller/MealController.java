@@ -2,6 +2,7 @@ package com.groceryplanning.groceryplanner.controller;
 
 import com.groceryplanning.groceryplanner.model.Ingredient;
 import com.groceryplanning.groceryplanner.model.Meal;
+import com.groceryplanning.groceryplanner.model.MealDTO;
 import com.groceryplanning.groceryplanner.repository.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,13 @@ public class MealController {
         } else {
             return ResponseEntity.ok(meal);
         }
+    }
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity<MealDTO> getMealDetails(@PathVariable Long id) {
+        Meal meal = mealRepository.findById(id).orElse(null);
+        MealDTO dto = MealDTO.convertToDTO(meal);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/allmeals")

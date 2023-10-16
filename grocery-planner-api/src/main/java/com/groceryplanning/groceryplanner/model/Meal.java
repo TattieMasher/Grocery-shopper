@@ -2,6 +2,7 @@ package com.groceryplanning.groceryplanner.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,9 @@ public class Meal {
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
     private Set<Ingredient> ingredients;
+
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MealIngredient> mealIngredients = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -57,5 +61,13 @@ public class Meal {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Set<MealIngredient> getMealIngredients() {
+        return mealIngredients;
+    }
+
+    public void setMealIngredients(Set<MealIngredient> mealIngredients) {
+        this.mealIngredients = mealIngredients;
     }
 }
