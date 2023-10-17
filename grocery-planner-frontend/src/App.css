@@ -1,0 +1,67 @@
+/* App.css */
+
+.App {
+  text-align: center;
+  background-color: #73877B;
+}
+
+/* ShoppingList.css */
+
+.meal-list-app-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meal-list-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.meal-list {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #79ADDC;
+  list-style: none;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.meal-list li:nth-child(even) {
+  background-color: #ADF7B6;
+}
+
+.meal-list li {
+  width: 95%;
+  margin: 0 auto;
+  padding: 5px 0;
+  border-radius: 5px;
+  background-color: #DDFBD2;
+}
+
+.control-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+}
+
+.add-button,
+.clear-button,
+.generate-button {
+  width: 100%;
+  padding: 10px 20px;
+  margin: 10px 0;
+  color: black;
+  background-color: #FFEE93;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.add-button:hover,
+.clear-button:hover,
+.generate-button:hover {
+  background-color: #0056b3;
+}
