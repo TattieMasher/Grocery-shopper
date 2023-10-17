@@ -1,6 +1,5 @@
 package com.groceryplanning.groceryplanner.controller;
 
-import com.groceryplanning.groceryplanner.model.Ingredient;
 import com.groceryplanning.groceryplanner.model.Meal;
 import com.groceryplanning.groceryplanner.model.MealDTO;
 import com.groceryplanning.groceryplanner.repository.MealRepository;
@@ -8,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import java.util.Set;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000") // TODO: Check me! Added to get React working.
 @RequestMapping("/meals")
 public class MealController {
     private final MealRepository mealRepository;
@@ -24,25 +22,37 @@ public class MealController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Meal> getMealById(@PathVariable Long id) {
+    public ResponseEntity<MealDTO> getMealOverviewById(@PathVariable Long id) {
         Meal meal = mealRepository.findById(id).orElse(null);
-        if (meal == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(meal);
+        MealDTO dto = MealDTO.convertToDTO(meal, false, false);
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/allmeals")
+    public ResponseEntity<List<MealDTO>> getAllMealOverviews() {
+        List<Meal> meals = mealRepository.findAll();
+        List<MealDTO> mealDTOs = new ArrayList<>();
+        for(Meal meal : meals) {
+            mealDTOs.add(MealDTO.convertToDTO(meal, true, true));
         }
+        return ResponseEntity.ok(mealDTOs);
     }
 
     @GetMapping("/details/{id}")
     public ResponseEntity<MealDTO> getMealDetails(@PathVariable Long id) {
         Meal meal = mealRepository.findById(id).orElse(null);
-        MealDTO dto = MealDTO.convertToDTO(meal);
+        MealDTO dto = MealDTO.convertToDTO(meal, true, true);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/allmeals")
-    public ResponseEntity<List<Meal>> getAllMeals() {
+    @GetMapping("/details/allmeals")
+    public ResponseEntity<List<MealDTO>> getAllMealDetails() {
         List<Meal> meals = mealRepository.findAll();
-        return ResponseEntity.ok(meals);
+        List<MealDTO> mealDTOs = new ArrayList<>();
+        for(Meal meal : meals) {
+            mealDTOs.add(MealDTO.convertToDTO(meal, true, true));
+        }
+        return ResponseEntity.ok(mealDTOs);
     }
+
 }

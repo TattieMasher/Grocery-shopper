@@ -42,26 +42,31 @@ public class MealDTO {
         this.ingredients = ingredients;
     }
 
-    public static MealDTO convertToDTO(Meal meal) {
+    public static MealDTO convertToDTO(Meal meal, boolean includeIngredients, boolean includeQuantities) {
         MealDTO dto = new MealDTO();
         dto.setId(meal.getId());
         dto.setName(meal.getName());
         dto.setDescription(meal.getDescription());
 
-        for (MealIngredient link : meal.getMealIngredients()) {
-            IngredientDetails details = new IngredientDetails();
-            details.setIngredientId(link.getIngredient().getIngredientId());
-            details.setIngredientName(link.getIngredient().getName());
-            details.setQuantity(link.getQuantity());
-            details.setQuantityUnit(link.getQuantityUnit());
+        if(includeIngredients) {
+            for (MealIngredient link : meal.getMealIngredients()) {
+                IngredientDetails details = new IngredientDetails();
+                details.setIngredientId(link.getIngredient().getIngredientId());
+                details.setIngredientName(link.getIngredient().getName());
 
-            dto.getIngredients().add(details);
+                if(includeQuantities) {
+                    details.setQuantity(link.getQuantity());
+                    details.setQuantityUnit(link.getQuantityUnit());
+                }
+
+                dto.getIngredients().add(details);
+            }
         }
-
         return dto;
     }
 }
 
+// Defined here, because this will only ever be used within the context of meals.
 class IngredientDetails {
     private Long ingredientId;
     private String ingredientName;
