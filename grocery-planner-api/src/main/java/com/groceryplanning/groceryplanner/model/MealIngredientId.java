@@ -14,6 +14,15 @@ public class MealIngredientId implements Serializable {
 
     // Constructor, getters, setters, equals, and hashCode
 
+
+    public MealIngredientId() {
+    }
+
+    public MealIngredientId(Long mealId, Long ingredientId) {
+        this.mealId = mealId;
+        this.ingredientId = ingredientId;
+    }
+
     public Long getMealId() {
         return mealId;
     }
