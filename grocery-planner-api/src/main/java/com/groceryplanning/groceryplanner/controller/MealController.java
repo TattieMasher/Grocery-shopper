@@ -41,7 +41,7 @@ public class MealController {
         List<Meal> meals = mealRepository.findAll();
         List<MealDTO> mealDTOs = new ArrayList<>();
         for(Meal meal : meals) {
-            mealDTOs.add(MealDTO.convertToDTO(meal, true, true));
+            mealDTOs.add(MealDTO.convertToDTO(meal, false, false));
         }
         return ResponseEntity.ok(mealDTOs);
     }
