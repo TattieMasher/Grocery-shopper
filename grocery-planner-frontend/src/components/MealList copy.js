@@ -31,12 +31,10 @@ const MealList = () => {
         </ul>
         <div className="control-buttons">
           <DimmerModal triggerButtonLabel="Add meal" meals={meals}/>
-          <Button className="add-button">Add meal</Button>
           <Button className="clear-button">Clear meals</Button>
           <Button className="generate-button">Generate shopping list</Button>
         </div>
       </div>
-
     </div>
   );
 };

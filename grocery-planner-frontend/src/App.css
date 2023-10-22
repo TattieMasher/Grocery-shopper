@@ -101,15 +101,14 @@
   box-shadow: none !important;
 }
 
+.results.transition.visible {
+  width: 100% !important;
+}
+
 .meal-search-result-name {
-  font-size: 16px;
-  text-align: left;
+  text-align: center;
 }
 
 .meal-search-result-desc {
   text-align: right;
-}
-
-.results.transition.visible {
-  width: 100% !important;
 }

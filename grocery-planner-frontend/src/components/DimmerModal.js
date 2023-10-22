@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Dimmer, Header, Icon, Modal, Search } from 'semantic-ui-react';
+import MealDetailsModal from './MealDetailsModal';
 
 const DimmerModal = ({ triggerButtonLabel, meals }) => {
   // States
   const [modalOpen, setModalOpen] = useState(false); // for meal visibility
   const [searchQuery, setSearchQuery] = useState(''); // for setting search query
   const [searchResults, setSearchResults] = useState([]); // for returning search results
+  const [selectedMeal, setSelectedMeal] = useState(null); // for the selected meal
+  const [isMealDetailsModalOpen, setMealDetailsModalOpen] = useState(false); // Define isMealDetailsModalOpen state
 
   const handleSearchChange = (e, { value }) => {
     setSearchQuery(value);
@@ -23,33 +26,47 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
     setSearchResults(filteredMeals);
   };
 
+  // Set the selected meal when a result is clicked
+  const handleResultSelect = (e, { result }) => {
+    setSelectedMeal(result);
+    setMealDetailsModalOpen(true);
+  };
+
   return (
     <div>
-      <Button onClick={() => setModalOpen(true)}>{triggerButtonLabel}</Button>
+      <Button className="add-button" onClick={() => setModalOpen(true)}>
+        {triggerButtonLabel}
+      </Button>
       <Modal
         dimmer="blurring"
         open={modalOpen}
         onClose={() => setModalOpen(false)}
       >
         <Dimmer active={modalOpen} id="add-meal-modal">
-          <div className="meal-search-container" style={{ borderRadius: '50px', padding: '20px', width: '70vw'}}>
+          <div
+            className="meal-search-container"
+            style={{ borderRadius: '50px', padding: '20px', width: '70vw' }}
+          >
             <Header as="h2" icon inverted>
               <Icon name="food" />
               Add meal
             </Header>
             <Modal.Content>
-                <p>Add a meal to your meal list</p>
+              <p>Add a meal to your meal list</p>
               <Search
                 placeholder="Search for a meal..."
                 input={{ icon: 'search', iconPosition: 'right' }}
                 onSearchChange={handleSearchChange}
                 value={searchQuery}
                 results={searchResults}
+                onResultSelect={handleResultSelect} // Handle result selection
                 // Render search results - TODO: Make pretty!
                 resultRenderer={(result) => (
                   <div>
                     <div className="meal-search-result-name">{result.name}</div>
-                    <div className="meal-search-result-desc">{result.description}</div>
+                    <div className="meal-search-result-desc">
+                      {result.description}
+                    </div>
                   </div>
                 )}
               />
@@ -65,6 +82,11 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
           </div>
         </Dimmer>
       </Modal>
+      <MealDetailsModal
+        meal={selectedMeal}
+        isOpen={isMealDetailsModalOpen}
+        onClose={() => setMealDetailsModalOpen(false)}
+      />
     </div>
   );
 };
