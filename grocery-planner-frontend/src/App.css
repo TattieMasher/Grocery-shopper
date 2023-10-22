@@ -3,6 +3,7 @@
 .App {
   text-align: center;
   background-color: #73877B;
+  min-height: 100vh;
 }
 
 /* ShoppingList.css */
@@ -51,17 +52,64 @@
 .clear-button,
 .generate-button {
   width: 100%;
-  padding: 10px 20px;
-  margin: 10px 0;
-  color: black;
-  background-color: #FFEE93;
+  margin: 5px 0 !important;
+  background-color: #FFEE93 !important;
   border: none;
   cursor: pointer;
-  border-radius: 30px;
+  border-radius: 30px !important;
 }
 
-.add-button:hover,
-.clear-button:hover,
-.generate-button:hover {
-  background-color: #0056b3;
+/* TODO Delete????? */
+
+/* Add meal pop-up */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent !important;
+  z-index: 1000;
+  width: 300px;
+  padding: 20px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.ui.icon.input {
+  width: 100%;
+}
+
+.actions {
+  margin: 14px auto 0 auto;
+}
+
+.ui.green.button,
+.ui.red.button {
+  border-radius: 20px;
+  width: 75%;
+  margin-bottom: 15px;
+}
+
+/* DO NOT REMOVE. Otherwise the Semantic UI dimmer has a weird black background that I can't seem to manipulate...*/
+#add-meal-modal {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Also do not remove... Similar reason as above */
+.ui.modal.transition.visible.active {
+  box-shadow: none !important;
+}
+
+.meal-search-result-name {
+  font-size: 16px;
+  text-align: left;
+}
+
+.meal-search-result-desc {
+  text-align: right;
+}
+
+.results.transition.visible {
+  width: 100% !important;
 }
