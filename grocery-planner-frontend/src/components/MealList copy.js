@@ -5,7 +5,6 @@ import DimmerModal from './DimmerModal'; // Import the DimmerModal component
 
 const MealList = () => {
   const [meals, setMeals] = useState([]); // State to manage meal retrieveal
-  const [isModalOpen, setModalOpen] = useState(false); // State to manage modal visibility
 
   useEffect(() => {
     // Fetch meals from API
@@ -16,7 +15,7 @@ const MealList = () => {
   }, []);
 
   return (
-    <div className="meal-list-app-screen">
+    <div className="meal-list-app-screen"> 
       <h1>Meals</h1>
       <div className="meal-list-container">
         <ul className="meal-list">

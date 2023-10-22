@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Header, List } from 'semantic-ui-react';
 
-const MealDetailsModal = ({ meal, isOpen, onClose }) => {
+const ExistingMealDetailsModal = ({ meal, isOpen, onClose }) => {
   return (
     <Modal dimmer="blurring" open={isOpen} onClose={onClose}>
       <Modal.Header>Meal Details</Modal.Header>
@@ -24,4 +24,4 @@ const MealDetailsModal = ({ meal, isOpen, onClose }) => {
   );
 };
 
-export default MealDetailsModal;
+export default ExistingMealDetailsModal;

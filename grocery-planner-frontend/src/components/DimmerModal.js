@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Dimmer, Header, Icon, Modal, Search } from 'semantic-ui-react';
-import MealDetailsModal from './MealDetailsModal';
+import MealDetailsModal from './ExistingMealDetailsModal';
+import NewMealDetailsModal from './NewMealModal';
 
 const DimmerModal = ({ triggerButtonLabel, meals }) => {
   // States
@@ -9,6 +10,7 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
   const [searchResults, setSearchResults] = useState([]); // for returning search results
   const [selectedMeal, setSelectedMeal] = useState(null); // for the selected meal
   const [isMealDetailsModalOpen, setMealDetailsModalOpen] = useState(false); // Define isMealDetailsModalOpen state
+  const [isNewMealModalOpen, setNewMealModalOpen] = useState(false); // Define isNewMealModalOpen state
 
   const handleSearchChange = (e, { value }) => {
     setSearchQuery(value);
@@ -30,6 +32,11 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
   const handleResultSelect = (e, { result }) => {
     setSelectedMeal(result);
     setMealDetailsModalOpen(true);
+  };
+
+  // Handle the "Create new meal" button click to open the new meal modal
+  const handleCreateNewMealClick = () => {
+    setNewMealModalOpen(true);
   };
 
   return (
@@ -72,8 +79,8 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
               />
             </Modal.Content>
             <Modal.Actions>
-              <Button color="green" onClick={() => setModalOpen(false)}>
-                <Icon name="check" /> Add meal
+              <Button color="green" onClick={handleCreateNewMealClick}>
+                <Icon name="plus" /> Create new meal
               </Button>
               <Button color="red" onClick={() => setModalOpen(false)}>
                 <Icon name="remove" /> Close
@@ -82,11 +89,20 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
           </div>
         </Dimmer>
       </Modal>
-      <MealDetailsModal
-        meal={selectedMeal}
-        isOpen={isMealDetailsModalOpen}
-        onClose={() => setMealDetailsModalOpen(false)}
-      />
+      {isMealDetailsModalOpen && (
+        <MealDetailsModal
+          meal={selectedMeal}
+          isOpen={isMealDetailsModalOpen}
+          onClose={() => setMealDetailsModalOpen(false)}
+        />
+      )}
+      {isNewMealModalOpen && (
+        <NewMealDetailsModal
+          triggerButtonLabel="Create New Meal"
+          isOpen={isNewMealModalOpen}
+          onClose={() => setNewMealModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

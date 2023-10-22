@@ -112,3 +112,7 @@
 .meal-search-result-desc {
   text-align: right;
 }
+
+.message.empty .header::after {
+  content: ' Consider adding a new meal.';
+}
