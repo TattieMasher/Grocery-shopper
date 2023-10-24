@@ -51,7 +51,7 @@
 .add-button,
 .clear-button,
 .generate-button {
-  width: 100%;
+  width: 100% !important;
   margin: 5px 0 !important;
   background-color: #FFEE93 !important;
   border: none;
@@ -122,6 +122,10 @@
   width: 100%;
 }
 
+.meal-details-input {
+  font-size: 18px !important;
+}
+
 .ingredient-adder {
   display: flex;
   flex-direction: column;
@@ -129,4 +133,29 @@
 
 .meal-header-label {
   margin-bottom: 10px;
+}
+
+.meal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc; /* TODO: keep/remove? */
+}
+
+/* Centred */
+.meal-details {
+  flex-grow: 1;
+}
+
+.meal-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 2px;
+}
+
+.edit-button {
+  margin-bottom: 5px !important;
 }

@@ -29,9 +29,21 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals }) => {
   };
 
   // Set the selected meal when a result is clicked
-  const handleResultSelect = (e, { result }) => {
-    setSelectedMeal(result);
-    setMealDetailsModalOpen(true);
+  const handleResultSelect = async (e, { result }) => {
+    try {
+      // Fetch the meal details including ingredients
+      const response = await fetch(`http://localhost:8080/meals/details/${result.id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch meal details');
+      }
+      const mealDetails = await response.json();
+  
+      // Set the selected meal and its ingredients
+      setSelectedMeal(mealDetails);
+      setMealDetailsModalOpen(true);
+    } catch (error) {
+      console.error('Error fetching meal details:', error);
+    }
   };
 
   // Handle the "Create new meal" button click to open the new meal modal
@@ -90,18 +102,12 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals }) => {
           </div>
         </Dimmer>
       </Modal>
-      {isMealDetailsModalOpen && (
-        <MealDetailsModal
-          meal={selectedMeal}
-          isOpen={isMealDetailsModalOpen}
-          onClose={() => setMealDetailsModalOpen(false)}
-        />
-      )}
       {isNewMealModalOpen && (
         <NewMealDetailsModal
           triggerButtonLabel="Create New Meal"
           meals={meals} 
           setMeals={setMeals}
+          selectedMeal={selectedMeal} // Pass the selected meal
           isOpen={isNewMealModalOpen}
           onClose={() => setNewMealModalOpen(false)}
         />

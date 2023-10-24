@@ -12,7 +12,7 @@ const IngredientItem = ({ ingredient, onRemove }) => {
         <Icon name="trash alternate" color="red" onClick={handleRemoveClick} />
       </List.Content>
       <List.Content>
-        {ingredient.ingredientName} - {ingredient.quantity} {ingredient.unit}
+        {ingredient.ingredientName} - {ingredient.quantity} {ingredient.quantityUnit}
       </List.Content>
     </List.Item>
   );

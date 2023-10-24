@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, Header, Icon, Modal, List, Dropdown } from 'semantic-ui-react';
 import IngredientItem from './IngredientItem';
 
-const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen, onClose }) => {
+const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen, onClose, selectedMeal }) => {
   const [modalOpen, setMealMakerModalOpen] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredient, setSelectedIngredient] = useState(''); // Use a string to store the ingredient name
@@ -13,6 +13,25 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
   const [mealDescription, setMealDescription] = useState('');
   const quantityUnitOptions = ['grams', 'milliliters', 'pieces'];
 
+  useEffect(() => {
+    if (selectedMeal) {
+      setMealName(selectedMeal.name || '');
+      setMealDescription(selectedMeal.description || '');
+  
+      // Fetch the list of ingredients for the selected meal
+      fetch(`http://localhost:8080/meals/details/${selectedMeal.id}`)
+        .then((response) => response.json())
+        .then((mealDetails) => {
+          // Extract the ingredients from mealDetails and populate the ingredients state
+          const mealIngredients = mealDetails.ingredients || [];
+          setIngredients(mealIngredients);
+        })
+        .catch((error) => {
+          console.error('Error fetching meal ingredients:', error);
+        });
+    }
+  }, [selectedMeal]);
+
   const addIngredient = () => {
     if (selectedIngredient.trim() !== '' && quantityUnit !== '') {
       const newIngredient = {
@@ -21,26 +40,41 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
         quantityUnit: quantityUnit,
       };
       setIngredients([...ingredients, newIngredient]);
-      setSelectedIngredient(''); // Clear the selected ingredient
+      setSelectedIngredient(''); // Clear the selected ingredient details
       setQuantity('');
       setQuantityUnit('');
     }
   };
 
   const handleSaveMealClick = () => {
-    const mealData = {
-      name: mealName,
-      description: mealDescription,
-      ingredients: ingredients.map((ingredient) => ({
-        ingredientName: ingredient.ingredientName,
-        quantity: ingredient.quantity,
-        quantityUnit: ingredient.quantityUnit,
-      })),
-    };
+    // Validate the meal data as non-empty
+    if (
+      mealName.trim() === '' ||        
+      mealDescription.trim() === '' || 
+      ingredients.length === 0 ||      
+      ingredients.some((ingredient) => (
+        ingredient.ingredientName.trim() === '' ||
+        ingredient.quantity === '' ||
+        ingredient.quantityUnit === ''
+      ))
+    ) {
+      console.error('Validation failed. Not all required fields filled.');
+    } else {
+      // Save the meal
+      const mealData = {
+        name: mealName,
+        description: mealDescription,
+        ingredients: ingredients.map((ingredient) => ({
+          ingredientName: ingredient.ingredientName,
+          quantity: ingredient.quantity,
+          quantityUnit: ingredient.quantityUnit,
+        })),
+      };
+    
+      console.log("Saving meal: ", mealData);
   
-    console.log("Saving meal: ", mealData);
-  
-    saveMeal(mealData);
+      saveMeal(mealData);
+    }
   };
   
   const saveMeal = (mealData) => {
@@ -82,11 +116,13 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
             <Header>Create Meal</Header>
           </div>
           <Input
+            className="meal-details-input"
             label="Meal name: "
             value={mealName}
             onChange={(e) => setMealName(e.target.value)}
           />
           <Input
+            className="meal-details-input"
             label="Description:"
             value={mealDescription}
             onChange={(e) => setMealDescription(e.target.value)}
