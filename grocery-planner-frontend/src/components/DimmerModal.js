@@ -48,6 +48,7 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
         dimmer="blurring"
         open={modalOpen}
         onClose={() => setModalOpen(false)}
+        closeOnDimmerClick={false} // TODO: Decide whether or not to keep
       >
         <Dimmer active={modalOpen} id="add-meal-modal">
           <div

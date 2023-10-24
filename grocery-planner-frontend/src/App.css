@@ -84,7 +84,8 @@
 }
 
 .ui.green.button,
-.ui.red.button {
+.ui.red.button,
+.ui.teal.button {
   border-radius: 20px;
   width: 75%;
   margin-bottom: 15px;
@@ -115,4 +116,17 @@
 
 .message.empty .header::after {
   content: ' Consider adding a new meal.';
+}
+
+.ui.labeled.input {
+  width: 100%;
+}
+
+.ingredient-adder {
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-header-label {
+  margin-bottom: 10px;
 }

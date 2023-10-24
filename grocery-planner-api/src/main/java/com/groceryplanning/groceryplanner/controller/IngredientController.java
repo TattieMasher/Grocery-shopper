@@ -1,12 +1,18 @@
 package com.groceryplanning.groceryplanner.controller;
 
 import com.groceryplanning.groceryplanner.model.Ingredient;
+import com.groceryplanning.groceryplanner.model.Meal;
+import com.groceryplanning.groceryplanner.model.MealDTO;
 import com.groceryplanning.groceryplanner.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
+@CrossOrigin(origins = "http://localhost:3000") // TODO: Check me! Added to get React working.
 @RequestMapping("/ingredients")
 public class IngredientController {
     private final IngredientRepository ingredientRepository;
@@ -24,5 +30,11 @@ public class IngredientController {
         } else {
             return ResponseEntity.ok(ingredient);
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Ingredient>> getAllIngredients() {
+        List<Ingredient> ingredients = ingredientRepository.findAll();
+        return ResponseEntity.ok(ingredients);
     }
 }
