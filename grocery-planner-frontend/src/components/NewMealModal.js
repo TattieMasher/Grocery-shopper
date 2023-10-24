@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, Header, Icon, Modal, List, Dropdown } from 'semantic-ui-react';
 import IngredientItem from './IngredientItem';
 
-const NewMealDetailsModal = ({ triggerButtonLabel, name, isOpen, onClose }) => {
+const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen, onClose }) => {
   const [modalOpen, setMealMakerModalOpen] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const [selectedIngredient, setSelectedIngredient] = useState(''); // Use a string to store the ingredient name
@@ -37,12 +37,12 @@ const NewMealDetailsModal = ({ triggerButtonLabel, name, isOpen, onClose }) => {
         quantityUnit: ingredient.quantityUnit,
       })),
     };
-
+  
     console.log("Saving meal: ", mealData);
-
+  
     saveMeal(mealData);
   };
-
+  
   const saveMeal = (mealData) => {
     fetch('http://localhost:8080/meals', {
       method: 'POST',
@@ -53,8 +53,13 @@ const NewMealDetailsModal = ({ triggerButtonLabel, name, isOpen, onClose }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the response if needed (e.g., update your meals array)
         console.log('Meal saved:', data);
+  
+        // Update meals state with meal returned from the API
+        setMeals([...meals, data]);
+  
+        // Close the modal or perform other actions as needed
+        onClose();
       })
       .catch((error) => {
         console.error('Error saving meal:', error);
@@ -106,6 +111,7 @@ const NewMealDetailsModal = ({ triggerButtonLabel, name, isOpen, onClose }) => {
             </List>
             <div className="ingredient-adder">
               <Input
+                label="Ingredient"
                 placeholder="Enter ingredient name..."
                 value={selectedIngredient}
                 onChange={(e) => setSelectedIngredient(e.target.value)}

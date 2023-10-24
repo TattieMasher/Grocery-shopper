@@ -3,7 +3,7 @@ import { Button, Dimmer, Header, Icon, Modal, Search } from 'semantic-ui-react';
 import MealDetailsModal from './ExistingMealDetailsModal';
 import NewMealDetailsModal from './NewMealModal';
 
-const DimmerModal = ({ triggerButtonLabel, meals }) => {
+const DimmerModal = ({ triggerButtonLabel, setMeals, meals }) => {
   // States
   const [modalOpen, setModalOpen] = useState(false); // for meal visibility
   const [searchQuery, setSearchQuery] = useState(''); // for setting search query
@@ -100,6 +100,8 @@ const DimmerModal = ({ triggerButtonLabel, meals }) => {
       {isNewMealModalOpen && (
         <NewMealDetailsModal
           triggerButtonLabel="Create New Meal"
+          meals={meals} 
+          setMeals={setMeals}
           isOpen={isNewMealModalOpen}
           onClose={() => setNewMealModalOpen(false)}
         />
