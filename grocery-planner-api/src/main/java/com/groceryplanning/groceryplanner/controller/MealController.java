@@ -40,7 +40,7 @@ public class MealController {
     public ResponseEntity<List<MealDTO>> getAllMealOverviews() {
         List<Meal> meals = mealRepository.findAll();
         List<MealDTO> mealDTOs = new ArrayList<>();
-        for(Meal meal : meals) {
+        for (Meal meal : meals) {
             mealDTOs.add(MealDTO.convertToDTO(meal, false, false));
         }
         return ResponseEntity.ok(mealDTOs);
@@ -57,7 +57,7 @@ public class MealController {
     public ResponseEntity<List<MealDTO>> getAllMealDetails() {
         List<Meal> meals = mealRepository.findAll();
         List<MealDTO> mealDTOs = new ArrayList<>();
-        for(Meal meal : meals) {
+        for (Meal meal : meals) {
             mealDTOs.add(MealDTO.convertToDTO(meal, true, true));
         }
         return ResponseEntity.ok(mealDTOs);
@@ -95,8 +95,10 @@ public class MealController {
         meal = mealRepository.save(meal);  // Save meal to db to get the ID
         mealDTO.setId(meal.getId());    // Add the ID to the DTO to be returned
 
-        // Iterate all ingredients and associate with the meal
         List<MealIngredient> mealIngredients = new ArrayList<>();
+        List<IngredientDetails> updatedIngredients = new ArrayList<>(); // To store updated ingredient details
+
+        // Iterate all ingredients and associate with the meal
         for (int i = 0; i < ingredientEntities.size(); i++) {
             MealIngredient link = new MealIngredient();
             link.setId(new MealIngredientId(meal.getId(), ingredientEntities.get(i).getIngredientId())); // TODO: simplify this? Method breaks unless done this way, due to composite key in meal_ingredients_link table
@@ -105,8 +107,18 @@ public class MealController {
             link.setQuantity(mealDTO.getIngredients().get(i).getQuantity());
             link.setQuantityUnit(mealDTO.getIngredients().get(i).getQuantityUnit());
             mealIngredients.add(link);
+
+            // Create an updated IngredientDetails with the ingredient ID
+            IngredientDetails updatedIngredient = new IngredientDetails();
+            updatedIngredient.setIngredientId(ingredientEntities.get(i).getIngredientId());
+            updatedIngredient.setIngredientName(ingredientEntities.get(i).getName());
+            updatedIngredient.setQuantity(mealDTO.getIngredients().get(i).getQuantity());
+            updatedIngredient.setQuantityUnit(mealDTO.getIngredients().get(i).getQuantityUnit());
+            updatedIngredients.add(updatedIngredient);
         }
-        mealIngredientRepository.saveAll(mealIngredients);
+
+        mealIngredientRepository.saveAll(mealIngredients); // Save to meal_ingredient_link table
+        mealDTO.setIngredients(updatedIngredients); // Update mealDTO with ingredient IDs
 
         return ResponseEntity.ok(mealDTO);
     }
