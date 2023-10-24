@@ -37,4 +37,9 @@ public class IngredientController {
         List<Ingredient> ingredients = ingredientRepository.findAll();
         return ResponseEntity.ok(ingredients);
     }
+
+    @PostMapping("")
+    public ResponseEntity<Ingredient> saveIngredient(Ingredient ingredient) {
+        return ResponseEntity.ok(ingredient);
+    }
 }

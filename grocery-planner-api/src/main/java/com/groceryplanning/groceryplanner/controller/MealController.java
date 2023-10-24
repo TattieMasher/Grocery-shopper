@@ -93,6 +93,7 @@ public class MealController {
         meal.setName(mealDTO.getName());
         meal.setDescription(mealDTO.getDescription());
         meal = mealRepository.save(meal);  // Save meal to db to get the ID
+        mealDTO.setId(meal.getId());    // Add the ID to the DTO to be returned
 
         // Iterate all ingredients and associate with the meal
         List<MealIngredient> mealIngredients = new ArrayList<>();
