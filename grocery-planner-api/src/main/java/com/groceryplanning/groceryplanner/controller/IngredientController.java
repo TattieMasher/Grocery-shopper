@@ -32,6 +32,16 @@ public class IngredientController {
         }
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Ingredient> getIngredientByName(@PathVariable String name) {
+        Ingredient ingredient = ingredientRepository.findByName(name).orElse(null);
+        if (ingredient == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(ingredient);
+        }
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<Ingredient>> getAllIngredients() {
         List<Ingredient> ingredients = ingredientRepository.findAll();

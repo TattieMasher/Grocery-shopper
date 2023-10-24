@@ -23,7 +23,7 @@ CREATE TABLE `meal_ingredients_link` (
 	`meal_id` INT NOT NULL,
 	`ingredient_id` INT NOT NULL,
 	`ingredient_quantity` DECIMAL(10,2) NOT NULL,
-	`ingredient_quantity_unit` INT NOT NULL,
+	`ingredient_quantity_unit` varchar(255) NOT NULL,
 	PRIMARY KEY (`meal_id`,`ingredient_id`)
 );
 
@@ -52,3 +52,10 @@ ALTER TABLE `shopping_lists` ADD CONSTRAINT `shopping_lists_fk0` FOREIGN KEY (`u
 ALTER TABLE `shopping_list_items` ADD CONSTRAINT `shopping_list_items_fk0` FOREIGN KEY (`shopping_list_id`) REFERENCES `shopping_lists`(`shopping_list_id`);
 
 ALTER TABLE `shopping_list_items` ADD CONSTRAINT `shopping_list_items_fk1` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients`(`ingredient_id`);
+
+
+
+
+
+
+
