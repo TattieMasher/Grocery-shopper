@@ -62,4 +62,35 @@ public class ShoppingListController {
         savedShoppingList.setItems(savedItems);
 
         return ResponseEntity.ok(savedShoppingList);
-    }}
+    }
+
+    // TODO: Either delete the above or this one
+    @PostMapping("/create/{listName}")
+    public ResponseEntity<ShoppingList> createShoppingListFromIngredients(
+            @PathVariable String listName,
+            @RequestBody List<ShoppingListItem> shoppingListItems) {
+        // Create a new ShoppingList and set its name
+        ShoppingList shoppingList = new ShoppingList();
+        shoppingList.setListName(listName);
+
+        // Temporarily hardcode list user owner
+        Optional<User> alex = userRepository.findById(Long.valueOf(1));
+        shoppingList.setUser(alex.get());
+
+        // Save the shopping list to the database using the repository
+        ShoppingList savedShoppingList = shoppingListRepository.save(shoppingList);
+
+        // Iterate and associate ShoppingListItems with the new ShoppingList
+        for (ShoppingListItem item : shoppingListItems) {
+            item.setShoppingList(savedShoppingList);
+        }
+
+        // Save the updated ShoppingListItem objects
+        List<ShoppingListItem> savedItems = shoppingListItemRepository.saveAll(shoppingListItems);
+
+        // Set the list of saved ShoppingListItem objects back to the ShoppingList
+        savedShoppingList.setItems(savedItems);
+
+        return ResponseEntity.ok(savedShoppingList);
+    }
+}
