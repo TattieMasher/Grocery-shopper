@@ -75,7 +75,7 @@ public class MealController {
             // If it can't be found, create and save it!
             if (ingredient == null) {
                 ingredient = new Ingredient();
-                ingredient.setName(details.getIngredientName());
+                ingredient.setIngredientName(details.getIngredientName());
                 ingredient = ingredientRepository.save(ingredient);
             }
             // Add entity to arraylist
@@ -111,7 +111,7 @@ public class MealController {
             // Create an updated IngredientDetails with the ingredient ID
             IngredientDetails updatedIngredient = new IngredientDetails();
             updatedIngredient.setIngredientId(ingredientEntities.get(i).getIngredientId());
-            updatedIngredient.setIngredientName(ingredientEntities.get(i).getName());
+            updatedIngredient.setIngredientName(ingredientEntities.get(i).getIngredientName());
             updatedIngredient.setQuantity(mealDTO.getIngredients().get(i).getQuantity());
             updatedIngredient.setQuantityUnit(mealDTO.getIngredients().get(i).getQuantityUnit());
             updatedIngredients.add(updatedIngredient);

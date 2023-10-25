@@ -3,7 +3,6 @@ package com.groceryplanning.groceryplanner.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,11 +15,15 @@ public class Ingredient {
     private Long ingredientId;
 
     @Column(name = "ingredient_name")
-    private String name;
+    private String ingredientName;
 
     @JsonIgnore
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MealIngredient> mealIngredients = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ShoppingListItem> shoppingListItems = new HashSet<>();
 
     public Long getIngredientId() {
         return ingredientId;
@@ -30,12 +33,12 @@ public class Ingredient {
         this.ingredientId = ingredientId;
     }
 
-    public String getName() {
-        return name;
+    public String getIngredientName() {
+        return ingredientName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIngredientName(String ingredientName) {
+        this.ingredientName = ingredientName;
     }
 
     public Set<MealIngredient> getMealIngredients() {
@@ -44,5 +47,13 @@ public class Ingredient {
 
     public void setMealIngredients(Set<MealIngredient> mealIngredients) {
         this.mealIngredients = mealIngredients;
+    }
+
+    public Set<ShoppingListItem> getShoppingListItems() {
+        return shoppingListItems;
+    }
+
+    public void setShoppingListItems(Set<ShoppingListItem> shoppingListItems) {
+        this.shoppingListItems = shoppingListItems;
     }
 }

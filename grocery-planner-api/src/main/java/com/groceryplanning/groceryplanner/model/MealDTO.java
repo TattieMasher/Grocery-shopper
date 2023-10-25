@@ -1,6 +1,5 @@
 package com.groceryplanning.groceryplanner.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class MealDTO {
             for (MealIngredient link : meal.getMealIngredients()) {
                 IngredientDetails details = new IngredientDetails();
                 details.setIngredientId(link.getIngredient().getIngredientId());
-                details.setIngredientName(link.getIngredient().getName());
+                details.setIngredientName(link.getIngredient().getIngredientName());
 
                 if(includeQuantities) {
                     details.setQuantity(link.getQuantity());

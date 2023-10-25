@@ -2,6 +2,7 @@ package com.groceryplanning.groceryplanner.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,8 +20,8 @@ public class ShoppingList {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL)
-    private List<ShoppingListItem> items;
+    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShoppingListItem> items = new ArrayList<>();
 
     public Long getShoppingListId() {
         return shoppingListId;
