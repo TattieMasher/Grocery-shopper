@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Dimmer, Header, Icon, Modal, Search } from 'semantic-ui-react';
 import MealDetailsModal from './ExistingMealDetailsModal';
 import NewMealDetailsModal from './NewMealModal';
@@ -40,7 +40,7 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals }) => {
   
       // Set the selected meal and its ingredients
       setSelectedMeal(mealDetails);
-      setMealDetailsModalOpen(true);
+      setNewMealModalOpen(true);
     } catch (error) {
       console.error('Error fetching meal details:', error);
     }

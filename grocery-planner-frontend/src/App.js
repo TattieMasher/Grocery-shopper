@@ -1,5 +1,5 @@
 import './App.css';
-import MealList from './components/MealList copy';
+import MealList from './components/MealList';
 
 function App() {
   {
