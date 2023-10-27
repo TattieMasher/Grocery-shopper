@@ -93,4 +93,26 @@ public class ShoppingListController {
 
         return ResponseEntity.ok(savedShoppingList);
     }
+
+    /*
+        TEST METHOD
+     */
+    @GetMapping("/combine-and-return")
+    public ResponseEntity<ShoppingList> combineAndReturn(@RequestBody List<ShoppingListItem> shoppingListItems) {
+        // Create a new ShoppingList without items
+        ShoppingList shoppingList = new ShoppingList();
+
+        // Temporarily hardcode list user owner
+        Optional<User> alex = userRepository.findById(Long.valueOf(1));
+        shoppingList.setUser(alex.get());
+
+        // Combine the items using the combineItems method
+        shoppingList.setItems(shoppingListItems);
+
+        // Combine the items using the combineItems method
+        shoppingList.combineItems();
+
+        // Return the combined shopping list as the response
+        return ResponseEntity.ok(shoppingList);
+    }
 }
