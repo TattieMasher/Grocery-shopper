@@ -9,12 +9,14 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [quantityUnit, setQuantityUnit] = useState('');
+  const [mealId, setMealId] = useState('');
   const [mealName, setMealName] = useState('');
   const [mealDescription, setMealDescription] = useState('');
   const quantityUnitOptions = ['grams', 'milliliters', 'pieces'];
 
   useEffect(() => {
     if (selectedMeal) {
+      setMealId(selectedMeal.id || '');
       setMealName(selectedMeal.name || '');
       setMealDescription(selectedMeal.description || '');
   
@@ -60,7 +62,7 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
     ) {
       console.error('Validation failed. Not all required fields filled.');
     } else {
-      // Save the meal
+      // Create a meal data object without the id
       const mealData = {
         name: mealName,
         description: mealDescription,
@@ -70,6 +72,11 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
           quantityUnit: ingredient.quantityUnit,
         })),
       };
+
+    // Add the meal ID, if it exists (i.e, if the meal is being EDITED
+    if (mealId) {
+      mealData.id = mealId;
+    }
     
       console.log("Saving meal: ", mealData);
   
