@@ -1,13 +1,31 @@
+import React, { useState } from 'react';
 import './App.css';
 import MealList from './components/MealList';
+import ShoppingList from './components/ShoppingList'; // Import the component for displaying the shopping list
 
 function App() {
-  {
-    // https://coolors.co/73877b-839788-bdbbb6-e5d1d0-f5e4d7
-  }
+  const [shoppingList, setShoppingList] = useState([]); // to store shopping list data
+  const [showMealList, setShowMealList] = useState(true); // to toggle between MealList and ShoppingList
+
+  // Function to toggle between MealList and ShoppingList
+  const toggleShowMealList = () => {
+    setShowMealList(!showMealList);
+  };
+
   return (
     <div className="App">
-      <MealList />
+      {showMealList ? ( // Conditional rendering based on showMealList state
+        <MealList
+          shoppingList={shoppingList}
+          setShoppingList={setShoppingList}
+          toggleShowMealList={toggleShowMealList}
+        />
+      ) : (
+        <ShoppingList
+          shoppingList={shoppingList}
+          toggleShowMealList={toggleShowMealList}
+        />
+      )}
     </div>
   );
 }

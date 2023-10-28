@@ -4,7 +4,7 @@ import { Button, Dimmer, Header, Icon, Modal } from 'semantic-ui-react';
 import DimmerModal from './DimmerModal';
 import NewMealDetailsModal from './NewMealModal';
 
-const MealList = () => {
+const MealList = ({ setShoppingList, toggleShowMealList }) => {
   const [meals, setMeals] = useState([]);
   const [userSelectedMeals, setUserSelectedMeals] = useState([]);
   const [selectedMealForEdit, setSelectedMealForEdit] = useState(null); // Define the state
@@ -52,10 +52,13 @@ const MealList = () => {
     
         const responseData = await response.json();
         console.log('Shopping list created:', responseData);
-        // Handle success
+
+        // Update shoppinglist in master container
+        setShoppingList(responseData);
+
+        toggleShowMealList();
       } catch (error) {
         console.error('Error creating shopping list:', error);
-        // Handle error
       }
     } else {
       console.error('Add meals before trying to generate a list');
