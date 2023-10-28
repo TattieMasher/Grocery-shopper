@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, Header, Icon, Modal, List, Dropdown } from 'semantic-ui-react';
 import IngredientItem from './IngredientItem';
 
-const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen, onClose, selectedMeal }) => {
+const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedMeal, userSelectedMeals, setUserSelectedMeals }) => {
   const [modalOpen, setMealMakerModalOpen] = useState(false);
   const [ingredients, setIngredients] = useState([]);
-  const [selectedIngredient, setSelectedIngredient] = useState(''); // Use a string to store the ingredient name
+  const [selectedIngredient, setSelectedIngredient] = useState('');
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [quantity, setQuantity] = useState('');
   const [quantityUnit, setQuantityUnit] = useState('');
@@ -33,6 +33,11 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
         });
     }
   }, [selectedMeal]);
+
+  useEffect(() => {
+    console.log("Updated selected meals: ", userSelectedMeals);
+  }, [userSelectedMeals]);
+  
 
   const addIngredient = () => {
     if (selectedIngredient.trim() !== '' && quantityUnit !== '') {
@@ -73,7 +78,7 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
         })),
       };
 
-    // Add the meal ID, if it exists (i.e, if the meal is being EDITED
+    // Add the meal ID, if it exists (i.e, if the meal is being EDITED)
     if (mealId) {
       mealData.id = mealId;
     }
@@ -93,14 +98,24 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
       body: JSON.stringify(mealData),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log('Meal saved:', data);
+      .then((savedMeal) => {
+        console.log('Meal saved to db:', savedMeal);
   
-        // Update meals state with meal returned from the API
-        setMeals([...meals, data]);
+        // Find the index of the meal with matching id to saved meal, 
+        const existingMealIndex = userSelectedMeals.findIndex((meal) => meal.id === savedMeal.id);
   
-        // Close the modal or perform other actions as needed
-        onClose();
+        let updatedMeals;
+        if (existingMealIndex !== -1) {
+          // If the saved meal is found in array (exists), replace it
+          updatedMeals = [...userSelectedMeals];
+          updatedMeals[existingMealIndex] = savedMeal;
+        } else {
+          // If the saved meal doesn't exist (new meal), add it to our array
+          updatedMeals = [...userSelectedMeals, savedMeal];
+        }
+  
+        setUserSelectedMeals(updatedMeals);
+        onClose(); // Close the modal
       })
       .catch((error) => {
         console.error('Error saving meal:', error);
@@ -109,7 +124,7 @@ const NewMealDetailsModal = ({ triggerButtonLabel, setMeals, meals, name, isOpen
 
   return (
     <div>
-      <Button color="green" onClick={() => setMealMakerModalOpen(true)}>
+      <Button className="add-button" color="green" onClick={() => setMealMakerModalOpen(true)}>
         <Icon name="plus" /> Create new meal
       </Button>
       <Modal

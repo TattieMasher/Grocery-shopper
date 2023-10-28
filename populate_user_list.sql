@@ -16,10 +16,4 @@ INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, item_quantity,
 INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, item_quantity, item_quantity_unit) VALUES
   (1, 4, 200, 'grams'), -- Spaghetti
   (1, 5, 500, 'grams'), -- Beef Mince
-  (1, 6, 500, 'grams'); -- Tomato Sauce
-
--- Ingredients for Caesar Salad
-INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, item_quantity, item_quantity_unit) VALUES
-  (1, 1, 500, 'grams'), -- Chicken
-  (1, 7, 1, 'unit'), -- Lettuce
-  (1, 8, 20, 'grams'); -- Croutons
+  (1, 6, 500, 'grams'); -- Chopped Tomatoes

@@ -6,31 +6,28 @@ import NewMealDetailsModal from './NewMealModal';
 
 const MealList = () => {
   const [meals, setMeals] = useState([]);
+  const [userSelectedMeals, setUserSelectedMeals] = useState([]);
   const [selectedMealForEdit, setSelectedMealForEdit] = useState(null); // Define the state
-
-  useEffect(() => {
-    // Fetch meals from API
-    fetch('http://localhost:8080/meals/allmeals')
-      .then((response) => response.json())
-      .then((data) => setMeals(data))
-      .catch((error) => console.error('Error fetching meals:', error));
-  }, []);
 
   const editMeal = (meal) => {
     setSelectedMealForEdit(meal);
   };
 
   const handleDeleteMeal = (mealId) => {
-    const updatedMeals = meals.filter((meal) => meal.id !== mealId);
-    setMeals(updatedMeals);
+    const updatedMeals = userSelectedMeals.filter((meal) => meal.id !== mealId);
+    setUserSelectedMeals(updatedMeals);
   };
+
+  const handleClearMeals = () => {
+    setUserSelectedMeals([]);
+  }
 
   return (
     <div className="meal-list-app-screen">
       <h1>Meals</h1>
       <div className="meal-list-container">
         <ul className="meal-list">
-          {meals.map((meal) => (
+          {userSelectedMeals.map((meal) => (
             <li key={meal.id} className="meal-item">
               <div className="meal-details">
                 <div>
@@ -58,8 +55,14 @@ const MealList = () => {
           ))}
         </ul>
         <div className="control-buttons">
-          <DimmerModal triggerButtonLabel="Add meal" setMeals={setMeals} meals={meals} />
-          <Button className="clear-button">Clear meals</Button>
+          <DimmerModal 
+            triggerButtonLabel="Add meal"
+            setMeals={setMeals}
+            meals={meals}
+            userSelectedMeals={userSelectedMeals}
+            setUserSelectedMeals={setUserSelectedMeals}  
+          />
+          <Button className="clear-button" onClick={handleClearMeals}>Clear all meals</Button>
           <Button className="generate-button">Generate shopping list</Button>
         </div>
       </div>
@@ -69,6 +72,8 @@ const MealList = () => {
           setMeals={setMeals}
           meals={meals}
           selectedMeal={selectedMealForEdit}
+          userSelectedMeals={userSelectedMeals}
+          setUserSelectedMeals={setUserSelectedMeals}
           isOpen={true}
           onClose={() => setSelectedMealForEdit(null)}
         />

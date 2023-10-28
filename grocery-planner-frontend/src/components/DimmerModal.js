@@ -3,7 +3,7 @@ import { Button, Dimmer, Header, Icon, Modal, Search } from 'semantic-ui-react';
 import MealDetailsModal from './ExistingMealDetailsModal';
 import NewMealDetailsModal from './NewMealModal';
 
-const DimmerModal = ({ triggerButtonLabel, setMeals, meals }) => {
+const DimmerModal = ({ triggerButtonLabel, setMeals, meals, userSelectedMeals, setUserSelectedMeals }) => {
   // States
   const [modalOpen, setModalOpen] = useState(false); // for meal visibility
   const [searchQuery, setSearchQuery] = useState(''); // for setting search query
@@ -11,6 +11,15 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals }) => {
   const [selectedMeal, setSelectedMeal] = useState(null); // for the selected meal
   const [isMealDetailsModalOpen, setMealDetailsModalOpen] = useState(false); // Define isMealDetailsModalOpen state
   const [isNewMealModalOpen, setNewMealModalOpen] = useState(false); // Define isNewMealModalOpen state
+
+  // Moved to allow searching after updates are made to meals
+  useEffect(() => {
+    // Fetch meals from API
+    fetch('http://localhost:8080/meals/allmeals')
+      .then((response) => response.json())
+      .then((data) => setMeals(data))
+      .catch((error) => console.error('Error fetching meals:', error));
+  }, [modalOpen]);
 
   const handleSearchChange = (e, { value }) => {
     setSearchQuery(value);
@@ -108,6 +117,8 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals }) => {
           meals={meals} 
           setMeals={setMeals}
           selectedMeal={selectedMeal} // Pass the selected meal
+          userSelectedMeals={userSelectedMeals}
+          setUserSelectedMeals={setUserSelectedMeals}
           isOpen={isNewMealModalOpen}
           onClose={() => setNewMealModalOpen(false)}
         />
