@@ -17,6 +17,7 @@ package com.groceryplanning.groceryplanner.controller;
         import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000") // TODO: Check me! Added to get React working.
 @RequestMapping("/lists")
 public class ShoppingListController {
     @Autowired

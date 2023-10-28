@@ -22,6 +22,46 @@ const MealList = () => {
     setUserSelectedMeals([]);
   }
 
+  const generateShoppingList = async () => {
+    // Only save the current shopping list if one has been created in-app
+    if(userSelectedMeals.length > 0) {
+      // Create requestbody to match that as expected in API (List of ShoppingListItem entities)
+      let requestBody = userSelectedMeals.flatMap(meal =>
+        meal.ingredients.map(ingredient => ({
+          ingredient: {
+            ingredientId: ingredient.ingredientId,
+            ingredientName: ingredient.ingredientName
+          },
+          itemQuantity: ingredient.quantity,
+          itemQuantityUnit: ingredient.quantityUnit
+        }))
+      );
+    
+      try {
+        const response = await fetch('http://localhost:8080/lists/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
+        const responseData = await response.json();
+        console.log('Shopping list created:', responseData);
+        // Handle success
+      } catch (error) {
+        console.error('Error creating shopping list:', error);
+        // Handle error
+      }
+    } else {
+      console.error('Add meals before trying to generate a list');
+    }
+  };
+
   return (
     <div className="meal-list-app-screen">
       <h1>Meals</h1>
@@ -63,7 +103,7 @@ const MealList = () => {
             setUserSelectedMeals={setUserSelectedMeals}  
           />
           <Button className="clear-button" onClick={handleClearMeals}>Clear all meals</Button>
-          <Button className="generate-button">Generate shopping list</Button>
+          <Button className="generate-button" onClick={generateShoppingList}>Generate shopping list</Button>
         </div>
       </div>
       {selectedMealForEdit && (

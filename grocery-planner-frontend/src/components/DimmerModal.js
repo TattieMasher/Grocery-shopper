@@ -57,6 +57,8 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals, userSelectedMeals, s
 
   // Handle the "Create new meal" button click to open the new meal modal
   const handleCreateNewMealClick = () => {
+    // Clear the selectedMeal when opening the new meal modal
+    setSelectedMeal(null);
     setNewMealModalOpen(true);
   };
 
@@ -69,7 +71,7 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals, userSelectedMeals, s
         dimmer="blurring"
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        closeOnDimmerClick={false} // TODO: Decide whether or not to keep
+        closeOnDimmerClick={false}
       >
         <Dimmer active={modalOpen} id="add-meal-modal">
           <div
