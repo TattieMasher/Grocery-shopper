@@ -4,10 +4,14 @@ import { Button, Dimmer, Header, Icon, Modal } from 'semantic-ui-react';
 import DimmerModal from './DimmerModal';
 import NewMealDetailsModal from './NewMealModal';
 
-const MealList = ({ setShoppingList, toggleShowMealList }) => {
+const MealList = ({
+  setShoppingList,
+  toggleShowMealList,
+  userSelectedMeals,
+  setUserSelectedMeals
+}) => {
   const [meals, setMeals] = useState([]);
-  const [userSelectedMeals, setUserSelectedMeals] = useState([]);
-  const [selectedMealForEdit, setSelectedMealForEdit] = useState(null); // Define the state
+  const [selectedMealForEdit, setSelectedMealForEdit] = useState(null);
 
   const editMeal = (meal) => {
     setSelectedMealForEdit(meal);

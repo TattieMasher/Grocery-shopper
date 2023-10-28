@@ -6,6 +6,7 @@ import ShoppingList from './components/ShoppingList'; // Import the component fo
 function App() {
   const [shoppingList, setShoppingList] = useState([]); // to store shopping list data
   const [showMealList, setShowMealList] = useState(true); // to toggle between MealList and ShoppingList
+  const [userSelectedMeals, setUserSelectedMeals] = useState([]); // to store user-selected meals
 
   // Function to toggle between MealList and ShoppingList
   const toggleShowMealList = () => {
