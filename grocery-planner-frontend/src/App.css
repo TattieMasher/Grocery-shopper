@@ -136,11 +136,11 @@
 }
 
 .meal-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #ccc; /* TODO: keep/remove? */
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid #ccc !important; /* TODO: keep/remove? */
 }
 
 /* Centred */
@@ -158,4 +158,59 @@
 
 .edit-button {
   margin-bottom: 5px !important;
+}
+
+/* Shopping List Styles */
+.shopping-list-app-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shopping-list-container {
+  margin: 0 auto;
+  padding-bottom: 50px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.shopping-list {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #79ADDC;
+  list-style: none;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.shopping-list li:nth-child(even) {
+  background-color: #ADF7B6;
+}
+
+.shopping-list li {
+  width: 95%;
+  margin: 0 auto;
+  padding: 5px 0;
+  border-radius: 5px;
+  background-color: #DDFBD2;
+}
+
+.shopping-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid #ccc !important; /* TODO: keep/remove? */
+}
+
+.shopping-details {
+  margin-left: 50%;
+}
+
+.shopping-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 2px;
 }
