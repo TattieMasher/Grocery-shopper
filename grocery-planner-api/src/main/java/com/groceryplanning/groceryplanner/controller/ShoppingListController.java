@@ -128,18 +128,27 @@ public class ShoppingListController {
         if (optionalShoppingList.isPresent()) {
             ShoppingList existingShoppingList = optionalShoppingList.get();
 
-            // Update the existing list's items with the new items
+            // Clear the existing items list outside the entity
+            existingShoppingList.getItems().clear();
+
+            // Update the properties of the existing ShoppingListItem objects with the new ones
+            for (ShoppingListItem newItem : shoppingListItems) {
+                // Set the association with the existing ShoppingList. Added to avoid errors (TODO: CHECK ME)
+                newItem.setShoppingList(existingShoppingList);
+            }
+
+            // Set the list's items field
             existingShoppingList.setItems(shoppingListItems);
 
-            // Combine the items using the combineItems method
+            // Combine list items
             existingShoppingList.combineItems();
 
-            // Save the updated shopping list to the database
+            // Save the list
             ShoppingList updatedShoppingList = shoppingListRepository.save(existingShoppingList);
 
             return ResponseEntity.ok(updatedShoppingList);
         } else {
-            // Handle the case where the shopping list with the given ID doesn't exist
+            // TODO: Make this call list creation
             return ResponseEntity.notFound().build();
         }
     }

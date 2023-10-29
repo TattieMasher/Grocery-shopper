@@ -22,7 +22,7 @@ public class ShoppingList {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "shoppingList", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ShoppingListItem> items = new ArrayList<>();
 
     public Long getShoppingListId() {

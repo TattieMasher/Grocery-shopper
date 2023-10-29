@@ -28,81 +28,89 @@ const MealList = ({
   }
 
   const generateShoppingList = async () => {
-    // Check if list has been saved already
-    if(shoppingList.length > 0) {
-      /*      TODO: Amend this to PUT new details into same list (create API method and endpoint)
-      let requestBody = userSelectedMeals.flatMap(meal =>
-        meal.ingredients.map(ingredient => ({
+    console.log('Shopping List ID:', shoppingList.shoppingListId);
+    console.log('List: ', shoppingList);
+    if (shoppingList.shoppingListId != null) {
+      // Updating an existing list
+      const requestBody = userSelectedMeals.flatMap((meal) =>
+        meal.ingredients.map((ingredient) => ({
           ingredient: {
             ingredientId: ingredient.ingredientId,
-            ingredientName: ingredient.ingredientName
+            ingredientName: ingredient.ingredientName,
           },
           itemQuantity: ingredient.quantity,
-          itemQuantityUnit: ingredient.quantityUnit
+          itemQuantityUnit: ingredient.quantityUnit,
         }))
       );
-
+    
+      console.log('Updating shopping list with: ', requestBody);
+  
       try {
-        const response = await fetch('http://localhost:8080/lists/create', {
-          method: 'POST',
+        const response = await fetch(`http://localhost:8080/lists/update/${shoppingList.shoppingListId}`, {
+          method: 'PUT', 
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(requestBody),
-        });
+        });        
     
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
     
         const responseData = await response.json();
-        console.log('Shopping list created:', responseData);
-
-        // Update shoppinglist in master container
+        console.log('Shopping list updated:', responseData);
+    
+        // Update shopping list in the master container
         setShoppingList(responseData);
-
-        toggleShowMealList();
-        */
-    } else {} // TODO: Add the below to create a list to else case
-    // Only save the current shopping list if one has been created in-app
-    if(userSelectedMeals.length > 0) {
-      // Create requestbody to match that as expected in API (List of ShoppingListItem entities)
-      let requestBody = userSelectedMeals.flatMap(meal =>
-        meal.ingredients.map(ingredient => ({
-          ingredient: {
-            ingredientId: ingredient.ingredientId,
-            ingredientName: ingredient.ingredientName
-          },
-          itemQuantity: ingredient.quantity,
-          itemQuantityUnit: ingredient.quantityUnit
-        }))
-      );
     
-      try {
-        const response = await fetch('http://localhost:8080/lists/create-and-combine', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        });
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-    
-        const responseData = await response.json();
-        console.log('Shopping list created:', responseData);
-
-        // Update shoppinglist in master container
-        setShoppingList(responseData);
-
         toggleShowMealList();
       } catch (error) {
-        console.error('Error creating shopping list:', error);
+        console.error('Error updating shopping list:', error);
       }
     } else {
-      console.error('Add meals before trying to generate a list');
+      // Creating a new list
+      if (userSelectedMeals.length > 0) {
+        let requestBody = userSelectedMeals.flatMap((meal) =>
+          meal.ingredients.map((ingredient) => ({
+            ingredient: {
+              ingredientId: ingredient.ingredientId,
+              ingredientName: ingredient.ingredientName,
+            },
+            itemQuantity: ingredient.quantity,
+            itemQuantityUnit: ingredient.quantityUnit,
+          }))
+        );
+
+        console.log('Creating shopping list with: ', requestBody);
+  
+        try {
+          const response = await fetch('http://localhost:8080/lists/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          });
+  
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+  
+          const responseData = await response.json();
+          console.log('Shopping list created:', responseData);
+  
+          // Update shopping list in the master container
+          setShoppingList(responseData);
+  
+          toggleShowMealList();
+        } catch (error) {
+          console.error('Error creating shopping list:', error);
+        }
+      } else {
+        // If creating shopping list with to meals selected
+        console.error('Add meals before trying to generate a list');
+      }
     }
   };
 
