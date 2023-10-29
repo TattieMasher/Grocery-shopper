@@ -27,6 +27,7 @@ function App() {
         <ShoppingList
           shoppingList={shoppingList}
           toggleShowMealList={toggleShowMealList}
+          setShoppingList={setShoppingList}
         />
       )}
     </div>

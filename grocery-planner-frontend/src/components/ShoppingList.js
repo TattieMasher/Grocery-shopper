@@ -1,19 +1,32 @@
 import React from 'react';
 import { List, Button } from 'semantic-ui-react';
+import ShoppingListItem from './ShoppingListItem';
 
-const ShoppingList = ({ shoppingList, toggleShowMealList }) => {
+const ShoppingList = ({ shoppingList, toggleShowMealList, setShoppingList }) => {
+  const removeItem = (itemToRemove) => {
+    const updatedItems = shoppingList.items.filter((item) => item !== itemToRemove);
+
+    // Update the shopping list with the new items after removal
+    const updatedShoppingList = {
+      ...shoppingList,
+      items: updatedItems,
+    };
+
+    // Use setShoppingList to update the shopping list
+    setShoppingList(updatedShoppingList);
+  };
+
   return (
-    <div>
+    <div className="shopping-list-container">
       <h1>Shopping List</h1>
       <p>id: {shoppingList.shoppingListId}</p>
-      <List divided relaxed>
+      <List divided relaxed className="shopping-list">
         {shoppingList.items.map((item, index) => (
-          <List.Item key={index}>
-            <List.Header>{item.ingredient.ingredientName}</List.Header>
-            <List.Content>
-              {item.itemQuantity} {item.itemQuantityUnit}
-            </List.Content>
-          </List.Item>
+          <ShoppingListItem
+            key={index}
+            item={item}
+            onRemove={() => removeItem(item)}
+          />
         ))}
       </List>
       <Button onClick={toggleShowMealList}>Go back to Meals</Button>
