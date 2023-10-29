@@ -5,6 +5,7 @@ import DimmerModal from './DimmerModal';
 import NewMealDetailsModal from './NewMealModal';
 
 const MealList = ({
+  shoppingList,
   setShoppingList,
   toggleShowMealList,
   userSelectedMeals,
@@ -27,6 +28,42 @@ const MealList = ({
   }
 
   const generateShoppingList = async () => {
+    // Check if list has been saved already
+    if(shoppingList.length > 0) {
+      /*      TODO: Amend this to PUT new details into same list (create API method and endpoint)
+      let requestBody = userSelectedMeals.flatMap(meal =>
+        meal.ingredients.map(ingredient => ({
+          ingredient: {
+            ingredientId: ingredient.ingredientId,
+            ingredientName: ingredient.ingredientName
+          },
+          itemQuantity: ingredient.quantity,
+          itemQuantityUnit: ingredient.quantityUnit
+        }))
+      );
+
+      try {
+        const response = await fetch('http://localhost:8080/lists/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
+        const responseData = await response.json();
+        console.log('Shopping list created:', responseData);
+
+        // Update shoppinglist in master container
+        setShoppingList(responseData);
+
+        toggleShowMealList();
+        */
+    } else {} // TODO: Add the below to create a list to else case
     // Only save the current shopping list if one has been created in-app
     if(userSelectedMeals.length > 0) {
       // Create requestbody to match that as expected in API (List of ShoppingListItem entities)
@@ -42,7 +79,7 @@ const MealList = ({
       );
     
       try {
-        const response = await fetch('http://localhost:8080/lists/create', {
+        const response = await fetch('http://localhost:8080/lists/create-and-combine', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

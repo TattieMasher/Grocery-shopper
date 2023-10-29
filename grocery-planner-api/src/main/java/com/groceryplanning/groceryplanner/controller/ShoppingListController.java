@@ -98,7 +98,7 @@ public class ShoppingListController {
     /*
         TEST METHOD
      */
-    @GetMapping("/combine-and-return")
+    @PostMapping("/create-and-combine")
     public ResponseEntity<ShoppingList> combineAndReturn(@RequestBody List<ShoppingListItem> shoppingListItems) {
         // Create a new ShoppingList without items
         ShoppingList shoppingList = new ShoppingList();
@@ -107,13 +107,40 @@ public class ShoppingListController {
         Optional<User> alex = userRepository.findById(Long.valueOf(1));
         shoppingList.setUser(alex.get());
 
-        // Combine the items using the combineItems method
+        // Save the shopping list to the database using the repository
+        ShoppingList savedShoppingList = shoppingListRepository.save(shoppingList);
+
+        // Combine the items using the combineItems method TODO: Combine before or saving?
         shoppingList.setItems(shoppingListItems);
 
         // Combine the items using the combineItems method
-        shoppingList.combineItems();
+        savedShoppingList.combineItems();
 
         // Return the combined shopping list as the response
-        return ResponseEntity.ok(shoppingList);
+        return ResponseEntity.ok(savedShoppingList);
+    }
+
+    @PutMapping("/update/{shoppingListId}")
+    public ResponseEntity<ShoppingList> updateShoppingList(@PathVariable Long shoppingListId, @RequestBody List<ShoppingListItem> shoppingListItems) {
+        // Check if the shopping list with the given ID exists
+        Optional<ShoppingList> optionalShoppingList = shoppingListRepository.findById(shoppingListId);
+
+        if (optionalShoppingList.isPresent()) {
+            ShoppingList existingShoppingList = optionalShoppingList.get();
+
+            // Update the existing list's items with the new items
+            existingShoppingList.setItems(shoppingListItems);
+
+            // Combine the items using the combineItems method
+            existingShoppingList.combineItems();
+
+            // Save the updated shopping list to the database
+            ShoppingList updatedShoppingList = shoppingListRepository.save(existingShoppingList);
+
+            return ResponseEntity.ok(updatedShoppingList);
+        } else {
+            // Handle the case where the shopping list with the given ID doesn't exist
+            return ResponseEntity.notFound().build();
+        }
     }
 }

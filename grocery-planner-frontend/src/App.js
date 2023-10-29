@@ -20,6 +20,8 @@ function App() {
           shoppingList={shoppingList}
           setShoppingList={setShoppingList}
           toggleShowMealList={toggleShowMealList}
+          userSelectedMeals={userSelectedMeals} // Pass userSelectedMeals state
+          setUserSelectedMeals={setUserSelectedMeals} // Pass setUserSelecte
         />
       ) : (
         <ShoppingList
