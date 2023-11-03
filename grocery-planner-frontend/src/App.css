@@ -122,13 +122,46 @@
   width: 100%;
 }
 
+.input-label {
+  width: 100%;
+}
+
+/* New Meal modal */
+
+.create-meal-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.meal-details-label {
+  margin-top: 10px !important;
+  min-width: 25% !important;
+  max-width: 50% !important;
+  font-size: 18px !important;  
+  border-bottom-left-radius: 0px !important;
+  border-top-right-radius: 20px !important;
+}
+
 .meal-details-input {
+  width: 100% !important;
   font-size: 18px !important;
 }
 
 .ingredient-adder {
   display: flex;
   flex-direction: column;
+}
+
+.ingredient-details-label {
+  margin-top: 10px !important;
+  min-width: 25% !important;
+  max-width: 50% !important;
+  font-size: 16px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-right-radius: 20px !important;
 }
 
 .meal-header-label {
@@ -141,6 +174,10 @@
   align-items: center !important;
   padding: 10px 0 !important;
   border-bottom: 1px solid #ccc !important; /* TODO: keep/remove? */
+}
+
+.ingredient-adder .control-buttons {
+  margin-top: 10px;
 }
 
 /* Centred */
@@ -177,10 +214,18 @@
 .shopping-list {
   width: 100%;
   border-radius: 10px;
-  background-color: #79ADDC;
+  /* background-color: #79ADDC; */
   list-style: none;
   padding: 10px 0;
   text-align: center;
+}
+
+.shopping-list-inactive {
+  opacity: 20%;
+}
+
+.shopping-list-inactive  li {
+  background-color: teal;
 }
 
 .shopping-list li:nth-child(even) {
@@ -189,8 +234,7 @@
 
 .shopping-list li {
   width: 95%;
-  margin: 0 auto;
-  padding: 5px 0;
+  margin: 2px auto;
   border-radius: 5px;
   background-color: #DDFBD2;
 }
@@ -199,12 +243,12 @@
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 10px 0 !important;
-  border-bottom: 1px solid #ccc !important; /* TODO: keep/remove? */
+  padding: 0.2vh 0 !important;
+  border-bottom: 1px solid #ccc !important;
 }
 
 .shopping-details {
-  margin-left: 50%;
+  flex: 1;
 }
 
 .shopping-actions {
@@ -213,4 +257,10 @@
   justify-content: space-between;
   align-items: center;
   margin-right: 2px;
+}
+
+.shopping-checkbox {
+  margin-left: 25px;
+  width: 18px;
+  height: 18px;
 }

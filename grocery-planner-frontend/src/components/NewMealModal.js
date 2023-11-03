@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Input, Header, Icon, Modal, List, Dropdown } from 'semantic-ui-react';
+import { Button, Input, Header, Icon, Modal, List, Dropdown, Label } from 'semantic-ui-react';
 import IngredientItem from './IngredientItem';
 
 const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedMeal, userSelectedMeals, setUserSelectedMeals }) => {
@@ -128,6 +128,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
         <Icon name="plus" /> Create new meal
       </Button>
       <Modal
+        className="create-meal-modal"
         dimmer="blurring"
         open={isOpen}
         onClose={onClose}
@@ -135,17 +136,17 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
       >
         <Modal.Header>
           <div style={{ textAlign: 'center' }}>
-            <Header>Create Meal</Header>
+            <Header>Add Meal</Header>
           </div>
+          <Label className="meal-details-label">Meal Name:</Label>
           <Input
             className="meal-details-input"
-            label="Meal name: "
             value={mealName}
             onChange={(e) => setMealName(e.target.value)}
           />
+          <Label className="meal-details-label">Meal Description:</Label>
           <Input
             className="meal-details-input"
-            label="Description:"
             value={mealDescription}
             onChange={(e) => setMealDescription(e.target.value)}
           />
@@ -168,19 +169,20 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
               ))}
             </List>
             <div className="ingredient-adder">
+              <Label className="ingredient-details-label">Meal Description:</Label>
               <Input
-                label="Ingredient"
                 placeholder="Enter ingredient name..."
                 value={selectedIngredient}
                 onChange={(e) => setSelectedIngredient(e.target.value)}
               />
+              <Label className="ingredient-details-label">Quantity:</Label>
               <Input
-                label="Quantity"
                 type="number"
                 min="1"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
               />
+              <Label className="ingredient-details-label">Quantity Unit:</Label>
               <Dropdown
                 placeholder="Select unit..."
                 fluid
