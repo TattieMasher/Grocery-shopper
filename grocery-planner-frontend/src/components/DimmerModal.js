@@ -15,7 +15,7 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals, userSelectedMeals, s
   // Moved to allow searching after updates are made to meals
   useEffect(() => {
     // Fetch meals from API
-    fetch('http://localhost:8080/meals/allmeals')
+    fetch('http://54.37.17.154:8080/meals/allmeals')
       .then((response) => response.json())
       .then((data) => setMeals(data))
       .catch((error) => console.error('Error fetching meals:', error));
@@ -41,7 +41,7 @@ const DimmerModal = ({ triggerButtonLabel, setMeals, meals, userSelectedMeals, s
   const handleResultSelect = async (e, { result }) => {
     try {
       // Fetch the meal details including ingredients
-      const response = await fetch(`http://localhost:8080/meals/details/${result.id}`);
+      const response = await fetch(`http://54.37.17.154:8080/meals/details/${result.id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch meal details');
       }

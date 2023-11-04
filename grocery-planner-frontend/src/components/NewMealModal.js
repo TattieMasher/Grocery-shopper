@@ -21,7 +21,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
       setMealDescription(selectedMeal.description || '');
   
       // Fetch the list of ingredients for the selected meal
-      fetch(`http://localhost:8080/meals/details/${selectedMeal.id}`)
+      fetch(`http://54.37.17.154:8080/meals/details/${selectedMeal.id}`)
         .then((response) => response.json())
         .then((mealDetails) => {
           // Extract the ingredients from mealDetails and populate the ingredients state
@@ -65,7 +65,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
         ingredient.quantityUnit === ''
       ))
     ) {
-      console.error('Validation failed. Not all required fields filled.');
+      console.error('Validation failed. Meal detail fields must be filled and ingredients must be added.');
     } else {
       // Create a meal data object without the id
       const mealData = {
@@ -90,7 +90,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
   };
   
   const saveMeal = (mealData) => {
-    fetch('http://localhost:8080/meals', {
+    fetch('http://54.37.17.154:8080/meals', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

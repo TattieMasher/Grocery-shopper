@@ -46,7 +46,7 @@ const MealList = ({
       console.log('Updating shopping list with: ', requestBody);
   
       try {
-        const response = await fetch(`http://localhost:8080/lists/update/${shoppingList.shoppingListId}`, {
+        const response = await fetch(`http://54.37.17.154:8080/lists/update/${shoppingList.shoppingListId}`, {
           method: 'PUT', 
           headers: {
             'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const MealList = ({
         console.log('Creating shopping list with: ', requestBody);
   
         try {
-          const response = await fetch('http://localhost:8080/lists/create', {
+          const response = await fetch('http://54.37.17.154:8080/lists/create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
