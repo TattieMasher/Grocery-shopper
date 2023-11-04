@@ -169,7 +169,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
               ))}
             </List>
             <div className="ingredient-adder">
-              <Label className="ingredient-details-label">Meal Description:</Label>
+              <Label className="ingredient-details-label">Ingredient Name:</Label>
               <Input
                 placeholder="Enter ingredient name..."
                 value={selectedIngredient}
