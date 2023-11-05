@@ -30,47 +30,47 @@ const MealList = ({
   const generateShoppingList = async () => {
     console.log('Shopping List ID:', shoppingList.shoppingListId);
     console.log('List: ', shoppingList);
-    if (shoppingList.shoppingListId != null) {
-      // Updating an existing list
-      const requestBody = userSelectedMeals.flatMap((meal) =>
-        meal.ingredients.map((ingredient) => ({
-          ingredient: {
-            ingredientId: ingredient.ingredientId,
-            ingredientName: ingredient.ingredientName,
-          },
-          itemQuantity: ingredient.quantity,
-          itemQuantityUnit: ingredient.quantityUnit,
-        }))
-      );
+    if (userSelectedMeals.length > 0) {
+      if (shoppingList.shoppingListId != null) {
+        // Updating an existing list
+        const requestBody = userSelectedMeals.flatMap((meal) =>
+          meal.ingredients.map((ingredient) => ({
+            ingredient: {
+              ingredientId: ingredient.ingredientId,
+              ingredientName: ingredient.ingredientName,
+            },
+            itemQuantity: ingredient.quantity,
+            itemQuantityUnit: ingredient.quantityUnit,
+          }))
+        );
+      
+        console.log('Updating shopping list with: ', requestBody);
     
-      console.log('Updating shopping list with: ', requestBody);
-  
-      try {
-        const response = await fetch(`http://54.37.17.154:8080/lists/update/${shoppingList.shoppingListId}`, {
-          method: 'PUT', 
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        });        
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        try {
+          const response = await fetch(`https://grocery.alexs-apis.xyz/lists/update/${shoppingList.shoppingListId}`, {
+            method: 'PUT', 
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          });        
+      
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          const responseData = await response.json();
+          console.log('Shopping list updated:', responseData);
+      
+          // Update shopping list in the master container
+          setShoppingList(responseData);
+      
+          toggleShowMealList();
+        } catch (error) {
+          console.error('Error updating shopping list:', error);
         }
-    
-        const responseData = await response.json();
-        console.log('Shopping list updated:', responseData);
-    
-        // Update shopping list in the master container
-        setShoppingList(responseData);
-    
-        toggleShowMealList();
-      } catch (error) {
-        console.error('Error updating shopping list:', error);
-      }
-    } else {
-      // Creating a new list
-      if (userSelectedMeals.length > 0) {
+      } else {
+        // Creating a new list
         let requestBody = userSelectedMeals.flatMap((meal) =>
           meal.ingredients.map((ingredient) => ({
             ingredient: {
@@ -83,34 +83,34 @@ const MealList = ({
         );
 
         console.log('Creating shopping list with: ', requestBody);
-  
+
         try {
-          const response = await fetch('http://54.37.17.154:8080/lists/create', {
+          const response = await fetch('https://grocery.alexs-apis.xyz/lists/create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(requestBody),
           });
-  
+
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
-  
+
           const responseData = await response.json();
           console.log('Shopping list created:', responseData);
-  
+
           // Update shopping list in the master container
           setShoppingList(responseData);
-  
+
           toggleShowMealList();
         } catch (error) {
           console.error('Error creating shopping list:', error);
         }
-      } else {
-        // If creating shopping list with to meals selected
-        console.error('Add meals before trying to generate a list');
       }
+    } else {
+      // If creating shopping list with to meals selected
+      console.error('Add meals before trying to generate a list');
     }
   };
 

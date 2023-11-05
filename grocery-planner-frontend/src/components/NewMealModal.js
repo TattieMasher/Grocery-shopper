@@ -21,7 +21,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
       setMealDescription(selectedMeal.description || '');
   
       // Fetch the list of ingredients for the selected meal
-      fetch(`http://54.37.17.154:8080/meals/details/${selectedMeal.id}`)
+      fetch(`https://grocery.alexs-apis.xyz/meals/details/${selectedMeal.id}`)
         .then((response) => response.json())
         .then((mealDetails) => {
           // Extract the ingredients from mealDetails and populate the ingredients state
@@ -90,7 +90,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
   };
   
   const saveMeal = (mealData) => {
-    fetch('http://54.37.17.154:8080/meals', {
+    fetch('https://grocery.alexs-apis.xyz/meals', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
                   <Icon name="plus" /> Add Ingredient
                 </Button>
                 <Button color="teal" onClick={handleSaveMealClick}>
-                  <Icon name="check" /> Save meal
+                  <Icon name="check" /> Save meal to list
                 </Button>
                 <Button color="red" onClick={onClose}>
                   <Icon name="remove" /> Cancel

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000") // TODO: Check me! Added to get React working.
+@CrossOrigin(origins = "*") // TODO: Check me! Added to get React working.
 @RequestMapping("/meals")
 public class MealController {
     @Autowired
