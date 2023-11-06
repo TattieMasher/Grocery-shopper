@@ -29,7 +29,7 @@ CREATE TABLE `meal_ingredients_link` (
 
 CREATE TABLE `shopping_lists` (
 	`shopping_list_id` INT NOT NULL AUTO_INCREMENT,
-	`list_name` varchar(255) NOT NULL,
+	`list_name` varchar(255),
 	`user_id` INT NOT NULL,
 	PRIMARY KEY (`shopping_list_id`)
 );

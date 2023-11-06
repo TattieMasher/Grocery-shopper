@@ -39,7 +39,7 @@ const ShoppingListItem = ({ item, onRemove, onToggle }) => {
           className="edit-button"
           onClick={handleRemoveClick}
         >
-          <Icon name="pencil" />
+          <Icon name="trash" />
         </Button>
       </div>
     </li>

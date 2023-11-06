@@ -251,6 +251,10 @@
   flex: 1;
 }
 
+.shopping-details p {
+  margin-top: -5px; /* Decide on exact spacing */
+}
+
 .shopping-actions {
   display: flex;
   flex-direction: column;
@@ -263,4 +267,14 @@
   margin-left: 25px;
   width: 18px;
   height: 18px;
+}
+
+/* New Shopping List Item Modal */
+
+.ingredient-adder-unit {
+  line-height: 22px !important; /* Decide on this. This just matches the other default sytlings on modal */
+}
+
+.shopping-button {
+  width: 95% !important;
 }
