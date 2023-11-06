@@ -1,5 +1,6 @@
 package com.groceryplanning.groceryplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class ShoppingList {
     @Column(name = "list_name")
     private String listName;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -55,6 +57,10 @@ public class ShoppingList {
 
     public void setItems(List<ShoppingListItem> items) {
         this.items = items;
+    }
+
+    public void addItem(ShoppingListItem newItem) {
+        items.add(newItem);
     }
 
     public boolean combineItems() {

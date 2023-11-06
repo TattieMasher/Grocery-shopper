@@ -49,7 +49,9 @@ public class IngredientController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Ingredient> saveIngredient(Ingredient ingredient) {
-        return ResponseEntity.ok(ingredient);
+    public ResponseEntity<Ingredient> saveIngredient(@RequestBody Ingredient suppliedIngredient) {
+        // Save and return
+        Ingredient savedIngredient = ingredientRepository.save(suppliedIngredient);
+        return ResponseEntity.ok(savedIngredient);
     }
 }

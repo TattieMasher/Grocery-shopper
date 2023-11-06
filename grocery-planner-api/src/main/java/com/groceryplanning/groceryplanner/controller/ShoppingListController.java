@@ -152,4 +152,31 @@ public class ShoppingListController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/update/add/{shoppingListId}")
+    public ResponseEntity<ShoppingList> addToShoppingList(@PathVariable Long shoppingListId, @RequestBody ShoppingListItem newItem) {
+        // Check if the shopping list with the given ID exists
+        Optional<ShoppingList> optionalShoppingList = shoppingListRepository.findById(shoppingListId);
+
+        if (optionalShoppingList.isPresent()) {
+            ShoppingList existingShoppingList = optionalShoppingList.get();
+
+            // Set association with the existing ShoppingList
+            newItem.setShoppingList(existingShoppingList);
+
+            // Add the new item to the existing shopping list's items
+            existingShoppingList.getItems().add(newItem);
+
+            // Combine list items
+            existingShoppingList.combineItems();
+
+            // Save the updated shopping list to the database
+            ShoppingList updatedShoppingList = shoppingListRepository.save(existingShoppingList);
+
+            return ResponseEntity.ok(updatedShoppingList);
+        } else {
+            // Handle the case where the shopping list with the given ID doesn't exist
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
