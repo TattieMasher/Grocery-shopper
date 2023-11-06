@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { List, Button } from 'semantic-ui-react';
 import ShoppingListItem from './ShoppingListItem';
+import NewListItem from './NewShoppingListItem'
 
 const ShoppingList = ({ shoppingList, toggleShowMealList, setShoppingList }) => {
   const [inactiveItems, setInactiveItems] = useState({ items: [] }); // to store clicked items
+  const [isNewListItemModalOpen, setIsNewListItemModalOpen] = useState(false); // to control the new list item modal
 
   const removeItem = (itemToRemove) => {
     const updatedItems = shoppingList.items.filter((item) => item !== itemToRemove);
@@ -94,6 +96,7 @@ const ShoppingList = ({ shoppingList, toggleShowMealList, setShoppingList }) => 
           />
         ))}
       </List>
+      <NewListItem />
       <Button onClick={toggleShowMealList}>Go back to Meals</Button>
     </div>
   );
