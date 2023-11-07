@@ -96,8 +96,11 @@ const ShoppingList = ({ shoppingList, toggleShowMealList, setShoppingList }) => 
           />
         ))}
       </List>
-      <NewListItem />
-      <Button onClick={toggleShowMealList}>Go back to Meals</Button>
+      <NewListItem 
+        shoppingList={shoppingList}
+        setShoppingList={setShoppingList}/>
+      <Button className="add-button shopping-button"
+        onClick={toggleShowMealList}>Go back to Meals</Button>
     </div>
   );
 };

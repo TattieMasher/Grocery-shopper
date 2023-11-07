@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Button, Dimmer, Header, Icon, Modal } from 'semantic-ui-react';
+import { Button, Label, Header, Icon, Modal } from 'semantic-ui-react';
 import DimmerModal from './DimmerModal';
 import NewMealDetailsModal from './NewMealModal';
 
@@ -13,6 +13,7 @@ const MealList = ({
 }) => {
   const [meals, setMeals] = useState([]);
   const [selectedMealForEdit, setSelectedMealForEdit] = useState(null);
+  const [showErrorLabel, setShowErrorLabel] = useState(false);
 
   const editMeal = (meal) => {
     setSelectedMealForEdit(meal);
@@ -109,7 +110,11 @@ const MealList = ({
         }
       }
     } else {
-      // If creating shopping list with to meals selected
+      // If saving a meal without the required fields filled
+      setShowErrorLabel(true); // Show the error label
+      setTimeout(() => {
+        setShowErrorLabel(false); // Hide the error label after 2.5 seconds
+      }, 2500);
       console.error('Add meals before trying to generate a list');
     }
   };
@@ -156,6 +161,12 @@ const MealList = ({
           />
           <Button className="clear-button" onClick={handleClearMeals}>Clear all meals</Button>
           <Button className="generate-button" onClick={generateShoppingList}>Generate shopping list</Button>
+          {/* Conditional rendering of the error label */}
+          {showErrorLabel && (
+            <Label color="red" pointing="above" className="error-label">
+              Please add meals before generating a shopping list.
+            </Label>
+          )}
         </div>
       </div>
       {selectedMealForEdit && (

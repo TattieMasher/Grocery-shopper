@@ -59,6 +59,10 @@
   border-radius: 30px !important;
 }
 
+.error-label {
+  position: ;
+}
+
 /* TODO Delete????? */
 
 /* Add meal pop-up */
@@ -272,6 +276,7 @@
 /* New Shopping List Item Modal */
 
 .ingredient-adder-unit {
+  font-size: 18px !important;
   line-height: 22px !important; /* Decide on this. This just matches the other default sytlings on modal */
 }
 

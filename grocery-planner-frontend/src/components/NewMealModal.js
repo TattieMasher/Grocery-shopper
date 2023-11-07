@@ -13,6 +13,7 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
   const [mealName, setMealName] = useState('');
   const [mealDescription, setMealDescription] = useState('');
   const quantityUnitOptions = ['grams', 'milliliters', 'pieces'];
+  const [showErrorLabel, setShowErrorLabel] = useState(false);
 
   useEffect(() => {
     if (selectedMeal) {
@@ -65,6 +66,11 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
         ingredient.quantityUnit === ''
       ))
     ) {
+      // If meal details not filled
+      setShowErrorLabel(true); // Show the error label
+      setTimeout(() => {
+        setShowErrorLabel(false); // Hide the error label after 2.5 seconds
+      }, 2500);
       console.error('Validation failed. Meal detail fields must be filled and ingredients must be added.');
     } else {
       // Create a meal data object without the id
@@ -202,6 +208,11 @@ const NewMealDetailsModal = ({ setMeals, meals, name, isOpen, onClose, selectedM
                 <Button color="teal" onClick={handleSaveMealClick}>
                   <Icon name="check" /> Save meal to list
                 </Button>
+                {showErrorLabel && (
+                  <Label color="red" pointing="above" className="error-label">
+                    Please add a meal name, description and ingredients before saving.
+                  </Label>
+                )}
                 <Button color="red" onClick={onClose}>
                   <Icon name="remove" /> Cancel
                 </Button>

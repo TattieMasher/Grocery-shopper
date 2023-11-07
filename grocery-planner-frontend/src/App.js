@@ -18,10 +18,10 @@ function App() {
       {showMealList ? ( // Conditional rendering based on showMealList state
         <MealList
           shoppingList={shoppingList}
-          setShoppingList={setShoppingList}
+          setShoppingList={setShoppingList} // Pass shoppingList states
           toggleShowMealList={toggleShowMealList}
-          userSelectedMeals={userSelectedMeals} // Pass userSelectedMeals state
-          setUserSelectedMeals={setUserSelectedMeals} // Pass setUserSelecte
+          userSelectedMeals={userSelectedMeals} // Pass userSelectedMeals states
+          setUserSelectedMeals={setUserSelectedMeals}
         />
       ) : (
         <ShoppingList
