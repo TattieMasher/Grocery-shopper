@@ -62,6 +62,9 @@ public class ShoppingListController {
         // Set the list of saved ShoppingListItem objects back to the ShoppingList
         savedShoppingList.setItems(savedItems);
 
+        // Combine the items using the combineItems method
+        savedShoppingList.combineItems();
+
         return ResponseEntity.ok(savedShoppingList);
     }
 
@@ -91,6 +94,9 @@ public class ShoppingListController {
 
         // Set the list of saved ShoppingListItem objects back to the ShoppingList
         savedShoppingList.setItems(savedItems);
+
+        // Combine the items using the combineItems method
+        savedShoppingList.combineItems();
 
         return ResponseEntity.ok(savedShoppingList);
     }

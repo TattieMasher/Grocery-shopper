@@ -12,9 +12,6 @@ public class MealIngredientId implements Serializable {
     @Column(name = "ingredient_id")
     private Long ingredientId;
 
-    // Constructor, getters, setters, equals, and hashCode
-
-
     public MealIngredientId() {
     }
 

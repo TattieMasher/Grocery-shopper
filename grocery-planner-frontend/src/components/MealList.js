@@ -15,6 +15,32 @@ const MealList = ({
   const [selectedMealForEdit, setSelectedMealForEdit] = useState(null);
   const [showErrorLabel, setShowErrorLabel] = useState(false);
 
+  const incrementMealQuantity = (meal) => {
+    console.log('Meal before increment:', meal);
+    // Increment mealQuantity (or set to 1 if it doesn't exist)
+    const updatedMeal = { ...meal, mealQuantity: (meal.mealQuantity || 0) + 1 };
+    updateMeal(updatedMeal);
+    console.log('Meal after increment:', updatedMeal);
+  };
+
+  const decrementMealQuantity = (meal) => {
+    console.log('Meal before decrement:', meal);
+    // If mealQuantity exists and is greater than 1 before decrementing
+    if (meal.mealQuantity && meal.mealQuantity > 1) {
+      // Decrement meal's mealQuantity
+      const updatedMeal = { ...meal, mealQuantity: meal.mealQuantity - 1 };
+      updateMeal(updatedMeal);
+      console.log('Meal after decrement:', updatedMeal);
+    }
+  };
+
+  const updateMeal = (updatedMeal) => {
+    const updatedMeals = userSelectedMeals.map((meal) =>
+      meal.id === updatedMeal.id ? updatedMeal : meal
+    );
+    setUserSelectedMeals(updatedMeals);
+  };
+
   const editMeal = (meal) => {
     setSelectedMealForEdit(meal);
   };
@@ -40,7 +66,7 @@ const MealList = ({
               ingredientId: ingredient.ingredientId,
               ingredientName: ingredient.ingredientName,
             },
-            itemQuantity: ingredient.quantity,
+            itemQuantity: ingredient.quantity * (meal.mealQuantity || 1), // multiply the ingredient amount by how many entries of that meal there are, or 1, if no copies
             itemQuantityUnit: ingredient.quantityUnit,
           }))
         );
@@ -78,7 +104,7 @@ const MealList = ({
               ingredientId: ingredient.ingredientId,
               ingredientName: ingredient.ingredientName,
             },
-            itemQuantity: ingredient.quantity,
+            itemQuantity: ingredient.quantity * (meal.mealQuantity || 1), // multiply the ingredient amount by how many entries of that meal there are, or 1, if no copies
             itemQuantityUnit: ingredient.quantityUnit,
           }))
         );
@@ -126,6 +152,25 @@ const MealList = ({
         <ul className="meal-list">
           {userSelectedMeals.map((meal) => (
             <li key={meal.id} className="meal-item">
+              <div className="meal-actions">
+              <Button
+                icon
+                className="edit-button"
+                onClick={() => incrementMealQuantity(meal)} // Call increment function
+              >
+                <Icon name="plus" />
+              </Button>
+              <Button
+                icon
+                className="edit-button"
+                onClick={() => decrementMealQuantity(meal)} // Call decrement function
+              >
+                <Icon name="minus" />
+              </Button>
+              </div>
+              <div>
+                <h3>{meal.mealQuantity || 1}</h3> {/* Display mealQuantity, if it exists. If not, show 1. */}
+              </div>
               <div className="meal-details">
                 <div>
                   <h3>{meal.name}</h3>
