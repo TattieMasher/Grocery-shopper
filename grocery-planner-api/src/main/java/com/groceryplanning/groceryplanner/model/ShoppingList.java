@@ -9,14 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 
 @Entity
-@Table(name = "shopping_lists")
+@Table(name = "shopping_list")
 public class ShoppingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "shopping_list_id")
+    @Column(name = "id")
     private Long shoppingListId;
 
-    @Column(name = "list_name")
+    @Column(name = "name")
     private String listName;
 
     @JsonIgnore

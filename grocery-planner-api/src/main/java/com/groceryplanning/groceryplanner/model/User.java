@@ -3,16 +3,16 @@ package com.groceryplanning.groceryplanner.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="user_name", nullable = false)
+    @Column(name="username", nullable = false)
     private String name;
 
-    @Column(name="user_email", nullable = false, unique = true)
+    @Column(name="email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password_hash", nullable = false)

@@ -1,1 +1,3 @@
 grocery-planner-api/src/main/resources/application.properties
+frontend/
+.idea/

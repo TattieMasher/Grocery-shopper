@@ -50,6 +50,7 @@ public class IngredientController {
 
     @PostMapping("")
     public ResponseEntity<Ingredient> saveIngredient(@RequestBody Ingredient suppliedIngredient) {
+        // TODO, only save if it doesn't already exist. I'm getting dupes again.
         // Save and return
         Ingredient savedIngredient = ingredientRepository.save(suppliedIngredient);
         return ResponseEntity.ok(savedIngredient);

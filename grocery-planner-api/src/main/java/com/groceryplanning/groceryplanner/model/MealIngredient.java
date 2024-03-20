@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "meal_ingredients_link")
+@Table(name = "meal_ingredient")
 public class MealIngredient {
 
     @EmbeddedId
@@ -21,10 +21,10 @@ public class MealIngredient {
     @JoinColumn(name = "ingredient_id", nullable = false, updatable = false, insertable = false)
     private Ingredient ingredient;
 
-    @Column(name = "ingredient_quantity")
+    @Column(name = "quantity")
     private BigDecimal quantity;
 
-    @Column(name = "ingredient_quantity_unit")
+    @Column(name = "quantity_unit")
     private String quantityUnit;
 
     public MealIngredientId getId() {

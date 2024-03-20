@@ -6,11 +6,11 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "shopping_list_items")
+@Table(name = "shopping_list_item")
 public class ShoppingListItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_id")
+    @Column(name = "id")
     private Long itemId;
 
     @JsonIgnore
@@ -22,10 +22,10 @@ public class ShoppingListItem {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    @Column(name = "item_quantity")
+    @Column(name = "quantity")
     private BigDecimal itemQuantity;
 
-    @Column(name = "item_quantity_unit")
+    @Column(name = "quantity_unit")
     private String itemQuantityUnit;
 
     public Long getItemId() {

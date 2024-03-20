@@ -6,23 +6,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "meals")
+@Table(name = "meal")
 public class Meal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "meal_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "meal_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "meal_description", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "meal_ingredients_link",
+            name = "meal_ingredient",
             joinColumns = @JoinColumn(name = "meal_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
